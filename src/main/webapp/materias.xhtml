@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css"/>
+<link rel="stylesheet" type="text/css" href="./styles.css" media="screen" />
+</h:head>
+
+<h:body class="">
+<h:form id="form">
+<p:toolbar >
+<p:toolbarGroup align="right"> <p:button href="./index.xhtml" value="Volver" styleClass="ui-button-secondary" icon="pi pi-step-backward-alt" /></p:toolbarGroup>
+</p:toolbar>
+
+    <div class="card crud-demo">
+        <p:growl id="messages" showDetail="true"/>
+
+        <p:dataTable id="dt-materias" widgetVar="dtMaterias" var="materia" value="#{materiaController.materias}"
+                     reflow="true" styleClass="products-table"
+                     selection="#{materiaController.materiaSeleccionado}" rowKey="#{materia.id}" paginator="true"
+                     rows="10" rowSelectMode="add" paginatorPosition="bottom" size="small">
+            <f:facet name="header">
+                <div class="products-table-header">
+                    <h1>MATERIAS</h1>
+                </div>
+                <p:commandButton value="Nueva Materia" icon="pi pi-plus" actionListener="#{materiaController.nuevaMateria}"
+                                 update=":form:manage-materia-content" oncomplete="PF('manageMateriaDialog').show()"
+                                 styleClass="ui-button-success" style="margin-right: .5rem">
+                    <p:resetInput target=":form:manage-materia-content"/>
+                </p:commandButton>
+            </f:facet>
+
+            <p:column headerText="Id">
+                <h:outputText value="#{materia.id}"/>
+            </p:column>
+             <p:column headerText="Nombre">
+                <h:outputText value="#{materia.nombre}"/>
+            </p:column>
+             <p:column headerText="Serial">
+                <h:outputText value="#{materia.serial}"/>
+            </p:column>
+            <p:column headerText="Estudiantes">
+             <p:commandButton icon="pi pi-bookmark" update=":form:manage-materia-content"
+                                 oncomplete="PF('manageMateriaDialog').show()"
+                                 styleClass="edit-button ui-button-info"  process="@this">
+                    <f:setPropertyActionListener value="#{materia}" target="#{materiaController.materiaSeleccionado}"/>
+                    <p:resetInput target=":form:manage-materia-content"/>
+                </p:commandButton>
+            </p:column>
+            <p:column headerText="Editar">
+             <p:commandButton icon="pi pi-pencil" update=":form:manage-materia-content"
+                                 oncomplete="PF('manageMateriaDialog').show()"
+                                 styleClass="edit-button ui-button-success"  process="@this">
+                    <f:setPropertyActionListener value="#{materia}" target="#{materiaController.materiaSeleccionado}"/>
+                    <p:resetInput target=":form:manage-materia-content"/>
+                </p:commandButton>
+            </p:column>
+           
+            <p:column  headerText="Eliminar">
+               
+                <p:commandButton class="ui-button-warning " icon="pi pi-trash" process="@this"
+                                 oncomplete="PF('deleteMateriaDialog').show()">
+                    <f:setPropertyActionListener value="#{materia}" target="#{materiaController.materiaSeleccionado}"/>
+                </p:commandButton>
+            </p:column>
+
+        </p:dataTable>
+
+        <p:dialog header="Materia" showEffect="fade" modal="true"
+                  widgetVar="manageMateriaDialog" responsive="true">
+            <p:outputPanel id="manage-materia-content" class="ui-fluid">
+                <p:outputPanel rendered="#{not empty materiaController.materiaSeleccionado}">              
+                    <div class="p-field">
+                        <p:outputLabel for="nombre">Nombre</p:outputLabel>
+                        <p:inputText id="nombre" value="#{materiaController.materiaSeleccionado.nombre}" required="true"/>
+                    </div>
+                    <div class="p-field">
+                        <p:outputLabel for="serial">Serial</p:outputLabel>
+                        <p:inputText id="serial" value="#{materiaController.materiaSeleccionado.serial}"  required="true"/>
+                    </div>                 
+                    
+                </p:outputPanel>
+            </p:outputPanel>
+
+            <f:facet name="footer">
+                <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{materiaController.addMateria}"
+                                 update="manage-materia-content" process="manage-materia-content @this"/>
+                <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('manageMateriaDialog').hide()"
+                                 class="ui-button-secondary"/>
+            </f:facet>
+        </p:dialog>
+
+        <p:confirmDialog widgetVar="deleteMateriaDialog" showEffect="fade" width="300"
+                         message="¿Desea eliminar la materia?" header="Confirmar" severity="warn">
+            <p:commandButton value="Si" icon="pi pi-check" actionListener="#{materiaController.deleteMateria}"
+                             process="@this" oncomplete="PF('deleteMateriaDialog').hide()"/>
+            <p:commandButton value="No" type="button" styleClass="ui-button-secondary" icon="pi pi-times"
+                             onclick="PF('deleteMateriaDialog').hide()"/>
+        </p:confirmDialog>
+
+
+
+        <p:confirmDialog global="true" showEffect="fade" width="300">
+            <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check"/>
+            <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no ui-button-secondary"
+                             icon="pi pi-times"/>
+        </p:confirmDialog>
+    </div>
+</h:form>
+	 
+</h:body>
+</html>

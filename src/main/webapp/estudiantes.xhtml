@@ -11,6 +11,10 @@
 
 <h:body class="">
 <h:form id="form">
+<p:toolbar >
+<p:toolbarGroup align="right"> <p:button href="./index.xhtml" value="Volver" styleClass="ui-button-secondary" icon="pi pi-step-backward-alt" /></p:toolbarGroup>
+</p:toolbar>
+
     <div class="card crud-demo">
         <p:growl id="messages" showDetail="true"/>
 
@@ -84,7 +88,7 @@
             <f:facet name="footer">
                 <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{estudianteController.addEstudiante}"
                                  update="manage-estudiante-content" process="manage-estudiante-content @this"/>
-                <p:commandButton value="Eliminar" icon="pi pi-times" onclick="PF('manageEstudianteDialog').hide()"
+                <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('manageEstudianteDialog').hide()"
                                  class="ui-button-secondary"/>
             </f:facet>
         </p:dialog>
