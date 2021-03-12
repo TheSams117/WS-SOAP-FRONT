@@ -11,13 +11,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.fullstack.test.delegate.MateriaDelegate;
+import com.fullstack.test.delegate.MatriculaDelegate;
 import com.fullstack.test.wsdl.materias.MateriaData;
+import com.fullstack.test.wsdl.matriculas.EstudianteData;
 
 @Component
 @ViewScoped
 public class MateriaController {
 	@Autowired
 	private MateriaDelegate delegate;
+
+	@Autowired
+	private MatriculaDelegate delegateMatricula;
 
 	private MateriaData materiaSeleccionado;
 
@@ -41,6 +46,10 @@ public class MateriaController {
 		delegate.deleteMateria(materiaSeleccionado.getId());
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Materia Eliminado"));
 		PrimeFaces.current().ajax().update("form:messages", "form:dt-materias");
+	}
+
+	public List<EstudianteData> getEstudiantes() {
+		return delegateMatricula.getEstudiantesMateria(materiaSeleccionado.getId()).getEstudiante();
 	}
 
 	public List<MateriaData> getMaterias() {

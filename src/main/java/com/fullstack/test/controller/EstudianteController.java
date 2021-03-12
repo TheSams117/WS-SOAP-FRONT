@@ -11,7 +11,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.fullstack.test.delegate.EstudianteDelegate;
+import com.fullstack.test.delegate.MatriculaDelegate;
 import com.fullstack.test.wsdl.estudiantes.EstudianteData;
+import com.fullstack.test.wsdl.matriculas.MateriaData;
 
 @Component
 @ViewScoped
@@ -19,6 +21,8 @@ public class EstudianteController {
 
 	@Autowired
 	private EstudianteDelegate delegate;
+	@Autowired
+	private MatriculaDelegate delegateMatricula;
 
 	private EstudianteData estudianteSeleccionado;
 
@@ -50,6 +54,10 @@ public class EstudianteController {
 
 	public EstudianteData getEstudianteSeleccionado() {
 		return estudianteSeleccionado;
+	}
+
+	public List<MateriaData> getMaterias() {
+		return delegateMatricula.getMateriasEstudiante(estudianteSeleccionado.getId()).getMateria();
 	}
 
 	public void nuevoEstudiante() {

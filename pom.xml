@@ -72,6 +72,11 @@
 			<artifactId>all-themes</artifactId>
 			<version>1.0.8</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-devtools</artifactId>
+			<scope>runtime</scope>
+		</dependency>
 	</dependencies>
 	<profiles>
 		<profile>
@@ -96,8 +101,7 @@
 				<groupId>org.springframework.boot</groupId>
 				<artifactId>spring-boot-maven-plugin</artifactId>
 			</plugin>
-			<!-- 
-			
+		<!-- 
 			<plugin>
 					<groupId>org.jvnet.jaxb2.maven2</groupId>
 					<artifactId>maven-jaxb2-plugin</artifactId>
@@ -133,9 +137,24 @@
 								</schemas>					
 							</configuration>
 						</execution>
+						<execution>
+							<id>schema3-generate</id> 
+							<goals> 
+								<goal>generate</goal> 
+							</goals>
+							<configuration>
+								<schemaLanguage>WSDL</schemaLanguage>
+								<generatePackage>com.fullstack.test.wsdl.matriculas</generatePackage>
+								<schemas>
+									<schema>
+										<url>http://localhost:8080/ws/matriculas.wsdl</url>														
+									</schema>
+								</schemas>					
+							</configuration>
+						</execution>
 					</executions>
 			</plugin>
-			 -->
+		 -->
 		</plugins>
 		
 	</build>

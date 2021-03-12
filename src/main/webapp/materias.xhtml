@@ -43,11 +43,11 @@
                 <h:outputText value="#{materia.serial}"/>
             </p:column>
             <p:column headerText="Estudiantes">
-             <p:commandButton icon="pi pi-bookmark" update=":form:manage-materia-content"
-                                 oncomplete="PF('manageMateriaDialog').show()"
+             <p:commandButton icon="pi pi-bookmark" update=":form:manage-estudiantes-content"
+                                 oncomplete="PF('manageEstudiantesDialog').show()"
                                  styleClass="edit-button ui-button-info"  process="@this">
                     <f:setPropertyActionListener value="#{materia}" target="#{materiaController.materiaSeleccionado}"/>
-                    <p:resetInput target=":form:manage-materia-content"/>
+                    <p:resetInput target=":form:manage-estudiantes-content"/>
                 </p:commandButton>
             </p:column>
             <p:column headerText="Editar">
@@ -89,6 +89,29 @@
                 <p:commandButton value="Guardar" icon="pi pi-check" actionListener="#{materiaController.addMateria}"
                                  update="manage-materia-content" process="manage-materia-content @this"/>
                 <p:commandButton value="Cancelar" icon="pi pi-times" onclick="PF('manageMateriaDialog').hide()"
+                                 class="ui-button-secondary"/>
+            </f:facet>
+        </p:dialog>
+        
+        <p:dialog header="Estudiantes" showEffect="fade" modal="true"
+                  widgetVar="manageEstudiantesDialog" responsive="true">
+            <p:outputPanel id="manage-estudiantes-content" class="ui-fluid">
+                <p:outputPanel rendered="#{not empty materiaController.materiaSeleccionado}">              
+                       <p:dataTable id="estudiantes" var="estudiante" value="#{materiaController.estudiantes}" rowKey="#{estudiante.id}">
+				            
+				            <p:column headerText="Nombre">
+				                <h:outputText value="#{estudiante.nombre}" />
+				            </p:column>
+				            <p:column headerText="Identificacion">
+				                <h:outputText value="#{estudiante.identificacion}" />
+				            </p:column>
+				        </p:dataTable>          
+                    
+                </p:outputPanel>
+            </p:outputPanel>
+
+            <f:facet name="footer">
+                <p:commandButton value="Cerrar" icon="pi pi-times" onclick="PF('manageEstudiantesDialog').hide()"
                                  class="ui-button-secondary"/>
             </f:facet>
         </p:dialog>

@@ -20,7 +20,8 @@ public class DelegateConfiguration {
 		Jaxb2Marshaller marshaller = new Jaxb2Marshaller();
 		// this package must match the package in the <generatePackage> specified in
 		// pom.xml
-		String[] contextPaths = { "com.fullstack.test.wsdl.materias", "com.fullstack.test.wsdl.estudiantes" };
+		String[] contextPaths = { "com.fullstack.test.wsdl.materias", "com.fullstack.test.wsdl.estudiantes",
+				"com.fullstack.test.wsdl.matriculas" };
 		marshaller.setContextPaths(contextPaths);
 		return marshaller;
 	}
@@ -28,6 +29,15 @@ public class DelegateConfiguration {
 	@Bean
 	public MateriaDelegate materiaClient(Jaxb2Marshaller marshaller) {
 		MateriaDelegate client = new MateriaDelegate();
+		client.setDefaultUri("http://localhost:8080/ws");
+		client.setMarshaller(marshaller);
+		client.setUnmarshaller(marshaller);
+		return client;
+	}
+
+	@Bean
+	public MatriculaDelegate matriculaClient(Jaxb2Marshaller marshaller) {
+		MatriculaDelegate client = new MatriculaDelegate();
 		client.setDefaultUri("http://localhost:8080/ws");
 		client.setMarshaller(marshaller);
 		client.setUnmarshaller(marshaller);
